@@ -6,6 +6,25 @@
     <title>Document</title>
 </head>
 <body>
+    <dialog>
+        <form id="book-form">
+            <label for="title">Book title</label>
+            <input type="text" id="title" name="title">
+            <label for="author">Author</label>
+            <input type="text" id="author" name="author">
+            <label for="pages"># of pages</label>
+            <input type="number" id="pages" name="pages">
+            <fieldset>
+                <legend>Have you read it yet?</legend>
+                <input type="radio" id="read" name="read" value="yes">
+                <label for="read">Yes</label>
+                <input type="radio" id="notRead" name="read" value="no">
+                <label for="notRead">No</label>
+            </fieldset>
+            <button type="submit" id="btn">Submit</button>
+        </form>
+    </dialog>
+    <button>New Book</button>
     <script src="app.js"></script>
 </body>
 </html>
