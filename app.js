@@ -13,33 +13,50 @@ function addBookToLibrary(title, author, pages, read) {
     myLibrary.push(newBook);
 }
 
-// Loop through array, display each book
-//Let's try if loop to only create the ones that exist.
+// Create a Book prototype function that toggles a books read status
+// Button clicked... if book.read === "yes" {book.read = "no"}
 
-// NEXT UP - make the div disapper when it's erased from myLibrary (in the for loop below)
+Book.prototype.toggleRead = function (i) {
+    if (myLibrary[i].read  === "Read") {
+        myLibrary[i].read = "Not read";
+    } else {
+        myLibrary[i].read = "Read";
+    };
+};
+
 
 function displayBooks() {
     for (const element of myLibrary) {
         if (document.querySelector(`div[data-id="${element.id}"`) === null) {
             const newDiv = document.createElement("div");
-            const newBtn = document.createElement("button");
-            const newContent = document.createTextNode(element.title + " by " + element.author);
-            newBtn.textContent = "Click me";
+            const removeBtn = document.createElement("button");
+            const toggleBtn = document.createElement("button");
+            const newContent = document.createTextNode(element.title + " by " + element.author + ` (${element.pages} pages). ` + element.read + ".");
+            removeBtn.textContent = "Remove Book";
+            toggleBtn.textContent = "Toggle Read Status"
             newDiv.dataset.id = element.id;
-            newBtn.dataset.id = element.id;
-            newBtn.addEventListener("click", (e) => {
-                // Loop through array and remove the item whose data.id matches the button data.id.
+            removeBtn.dataset.id = element.id;
+            toggleBtn.dataset.id = element.id;
+            removeBtn.addEventListener("click", (e) => {
                 for (let i = 0; i < myLibrary.length; i++) {
                     if (e.target.dataset.id === myLibrary[i].id) {
                         myLibrary.splice(i, 1);
-                        // document.getElementById(e.target.id)
-                        console.log(myLibrary);
+                        document.querySelector(`div[data-id="${e.target.dataset.id}"]`).remove();
                     }
                 }
             });
+            toggleBtn.addEventListener("click", (e) => {
+                for (let i = 0; i < myLibrary.length; i++) {
+                    if (e.target.dataset.id === myLibrary[i].id) {
+                        myLibrary[i].toggleRead(i);
+                        newContent.textContent = element.title + " by " + element.author + ` (${element.pages} pages). ` + element.read + ".";
+                    }
+                }
+            })
             newDiv.appendChild(newContent);
             document.querySelector("body").appendChild(newDiv);
-            document.querySelector(`[data-id="${element.id}"`).appendChild(newBtn);
+            document.querySelector(`[data-id="${element.id}"`).appendChild(removeBtn);
+            document.querySelector(`[data-id="${element.id}"`).appendChild(toggleBtn);
         };
     };
 }
